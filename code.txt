@@ -1,2 +1,6 @@
 This line is correct
+<<<<<<< HEAD
+=======
+This line contains a bug
+>>>>>>> origin/new_feature
 This line is correct
