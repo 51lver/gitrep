@@ -1,0 +1,37 @@
+---
+- name: Users creating
+  hosts: nodes
+  become_method: sudo
+  become_user: root
+
+  tasks:
+  - name: Alice
+    ansible.builtin.user:
+      name: Alice
+      state: present
+      comment: alice@example.com
+      create_home: yes
+    register: newuser
+  - name: pass for Alice
+    shell: /usr/bin/openssl rand -base64 32 | passwd --stdin Alice
+    when: newuser.changed
+  - name: Bob
+    ansible.builtin.user:
+      name: Bob
+      state: present
+      comment: bob@example.com
+      create_home: yes
+    register: newuser
+  - name: pass for Bob
+    shell: /usr/bin/openssl rand -base64 32 | passwd --stdin Bob
+    when: newuser.changed
+  - name: Carol
+    ansible.builtin.user:
+      name: Carol
+      state: present
+      comment: carol@example.com
+      create_home: yes
+    register: newuser
+  - name: pass for Carol
+    shell: /usr/bin/openssl rand -base64 32 | passwd --stdin Carol
+    when: newuser.changed
