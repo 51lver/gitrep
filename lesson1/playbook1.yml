@@ -1,0 +1,34 @@
+---
+- name: Update web server
+  hosts: nodes
+  become_method: sudo
+  become_user: root
+
+  tasks:
+  - name: httpd installing
+    yum:
+      name: httpd
+      state: latest
+  - name: "Checking"
+    ansible.builtin.service:
+      name: httpd
+      state: started
+  - name: creating a file
+    copy:
+      dest: "/var/www/html/index.html"
+      content:
+        "Welcome to my web server"
+  - name: 80 port
+    ansible.posix.firewalld:
+      service: http
+      permanent: yes
+      state: enabled
+  - name: 443 port
+    ansible.posix.firewalld:
+      service: https
+      permanent: yes
+      state: enabled
+  - name: Restarting service firewalld
+    ansible.builtin.service:
+      name: firewalld
+      state: restarted

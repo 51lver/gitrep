@@ -1,0 +1,15 @@
+---
+- name: Interface name changing
+  hosts: nodes
+  become_method: sudo
+  become_user: root
+
+  tasks:
+  - name: changing parameters
+    ansible.builtin.lineinfile:
+      path: /etc/default/grub
+      regexp: '(GRUB_CMDLINE_LINUX="[^"]*)(")'
+      line: '\1 net.ifnames=0 biosdevname=0 \2'
+      backrefs: yes
+  - name: grub2
+    command: grub2-mkconfig -o /boot/grub2/grub.cfg

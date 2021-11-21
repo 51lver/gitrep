@@ -1,0 +1,26 @@
+---
+- name: Disabling web server
+  hosts: nodes
+  become_method: sudo
+  become_user: root
+
+  tasks:
+  - name: httpd removing
+    yum:
+      name: httpd
+      state: absent
+  - name: deleting a file
+    file:
+      path: "/var/www/html/index.html"
+      state: absent
+  - name: 80 port
+    ansible.posix.firewalld:
+      service: http
+      permanent: yes
+      state: disabled
+  - name: 443 port
+    ansible.posix.firewalld:
+      service: https
+      permanent: yes
+      state: disabled
+
