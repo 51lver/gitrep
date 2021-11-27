@@ -1,4 +1,4 @@
 ---
 # defaults file for httpd-role
 
-sysadmin: radmir_aiupov@epam.com
+owner: radmir_aiupov@epam.com
