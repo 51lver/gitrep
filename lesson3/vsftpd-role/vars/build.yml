@@ -1,0 +1,18 @@
+---
+# file: httpd/vars/build.yml
+
+
+httpd_ports:
+  - 80
+  - 443
+
+httpd_service: httpd
+
+httpd_conf: []
+
+httpd_configuration: |
+
+  ServerRoot "{{ httpd_dir_configuration }}"
+
+  # Include list of ports to listen on
+  Include ports.conf

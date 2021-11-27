@@ -1,0 +1,6 @@
+---
+- name: Using httpd-role  
+  hosts: nodes
+  roles:
+    - role: httpd-role
+      sysadmin: radmir_aiupov@epam.com
