@@ -1,0 +1,11 @@
+---
+# file: httpd/vars/build.yml
+
+
+httpd_ports:
+  - 80
+  - 443
+
+httpd_service: httpd
+
+httpd_conf: []
