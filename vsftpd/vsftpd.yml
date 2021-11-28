@@ -1,0 +1,9 @@
+---
+- name: Using vsftpd-role  
+  hosts: nodes
+  become_method: sudo
+  become_user: root
+  vars_files:
+    - ./group_vars/vsftpd.yaml
+  roles:
+    - vsftpd-role

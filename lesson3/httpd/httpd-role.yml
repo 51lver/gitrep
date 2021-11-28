@@ -1,0 +1,8 @@
+---
+- name: Using httpd
+  hosts: nodes
+  become_method: sudo
+  become_user: root
+  roles:
+    - role: httpd
+      owner: radmir_aiupov@epam.com

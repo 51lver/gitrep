@@ -1,0 +1,61 @@
+---
+- name: FTP
+  yum:
+name: vsftpd
+state: present
+
+- name: Firewalld
+  yum:
+name: firewalld
+state: present
+
+- name: Start Firewalld
+  service: name=firewalld
+           state=started 
+           enabled=yes
+   
+- name: httpd
+  service: name=httpd 
+           state=started
+           enabled=yes
+   
+- name: Start FTP
+  service: name=vsftpd
+           state=started
+           enabled=yes
+   
+- name: Allow http
+  firewalld: service=http
+             permanent=true 
+             state=enabled 
+             immediate=true
+   
+- name: Allow FTP
+  firewalld: port=21/tcp 
+             permanent=true 
+             state=enabled
+             immediate=true
+
+- name: Create folder
+  file:
+    path: /var/ftp/pub/upload
+    state: directory
+    mode: 0755
+
+- name: FTP configure
+lineinfile:
+  dest: /etc/vsftpd/vsftpd.conf
+  backup: yes
+  backrefs: yes
+  state: present
+  regexp: "{{ item.regexp }}"
+  line: "{{ item.line }}"
+with_items:
+  - { regexp: anonymous_enable=NO, line: anonymous_enable=YES }
+  - { regexp: anon_upload_enable, line: anon_upload_enable=YES }
+  - { regexp: anon_mkdir_write_enable, line: anon_mkdir_write_enable=YES }
+
+- name: Start FTP service
+  service: name=vsftpd
+           state=restarted
+           enabled=yes
