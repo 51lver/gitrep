@@ -1,0 +1,25 @@
+---
+- name: Users creating
+  hosts: nodes
+  become_method: sudo
+  become_user: root
+
+  tasks:
+  - name: Users
+    ansible.builtin.user: 
+      name: "{{ item }}"
+      state: presentso
+      comment: "{{ item }}@example.com"
+      create_home: yes
+    loop: 
+      - Alice
+      - Bob
+      - Carol
+  - name: pass for Users
+    shell: /usr/bin/openssl rand -base64 32 | passwd --stdin "{{ item }}"
+    when: newuser.changed
+    loop:
+      - Alice
+      - Bob
+      - Carol
+
