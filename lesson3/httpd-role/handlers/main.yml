@@ -1,8 +1,6 @@
 ---
 # file: httpd/handlers/main.yml
-#
-# handlers file
-#
+
 
 - name: start httpd
   service:
