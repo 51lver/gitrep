@@ -1,13 +1,13 @@
 ---
 - name: FTP
   yum:
-name: vsftpd
-state: present
+    name: vsftpd
+    state: present
 
 - name: Firewalld
   yum:
-name: firewalld
-state: present
+    name: firewalld
+    state: present
 
 - name: Start Firewalld
   service: name=firewalld
@@ -43,14 +43,14 @@ state: present
     mode: 0755
 
 - name: FTP configure
-lineinfile:
-  dest: /etc/vsftpd/vsftpd.conf
-  backup: yes
-  backrefs: yes
-  state: present
-  regexp: "{{ item.regexp }}"
-  line: "{{ item.line }}"
-with_items:
+  lineinfile:
+    dest: /etc/vsftpd/vsftpd.conf
+    backup: yes
+    backrefs: yes
+    state: present
+    regexp: "{{ item.regexp }}"
+    line: "{{ item.line }}"
+  with_items:
   - { regexp: anonymous_enable=NO, line: anonymous_enable=YES }
   - { regexp: anon_upload_enable, line: anon_upload_enable=YES }
   - { regexp: anon_mkdir_write_enable, line: anon_mkdir_write_enable=YES }
